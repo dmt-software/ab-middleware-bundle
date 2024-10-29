@@ -1,0 +1,12 @@
+framework:
+    secret: "test"
+    test: ~
+
+ab_middleware:
+    cookie:
+        name: "ab_test"
+        domain: "localhost"
+    experiments:
+        test-experiment:
+            variant-1: 0.5
+            control: 0.5

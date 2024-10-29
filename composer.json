@@ -1,0 +1,32 @@
+{
+    "name": "dmt-software/ab-middleware-bundle",
+    "description": "ab middleware bundle",
+    "type": "library",
+    "license": "mit",
+    "autoload": {
+        "psr-4": {
+            "DMT\\AbMiddlewareBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "DMT\\AbMiddlewareBundle\\Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "lingonl",
+            "email": "lingo@de-mes.nl"
+        }
+    ],
+    "require": {
+        "php": ">=8.3",
+        "symfony/http-kernel": "^7.0",
+        "dmt-software/ab-middleware": ">=0.0.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.4",
+        "symfony/framework-bundle": "^7.0",
+        "symfony/yaml": "^7.0"
+    }
+}

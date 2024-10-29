@@ -1,2 +1,2 @@
-# ab-middleware-symfony
-ab middleware for symfony
+# ab-middleware-bundle
+ab middleware bundle for symfony
