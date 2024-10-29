@@ -4,6 +4,7 @@ namespace DMT\AbMiddlewareBundle\Tests;
 
 use DateMalformedStringException;
 use DMT\AbMiddleware\AbService;
+use DMT\AbMiddlewareBundle\AbMiddlewareBundle;
 use DMT\AbMiddlewareBundle\EventListener\AbMiddlewareListener;
 use DMT\AbMiddlewareBundle\Tests\Util\App\Kernel;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -16,6 +17,7 @@ use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 #[CoversClass(AbMiddlewareListener::class)]
+#[CoversClass(AbMiddlewareBundle::class)]
 class AbMiddlewareEventListenerTest extends KernelTestCase
 {
     private Container $container;
@@ -82,6 +84,19 @@ class AbMiddlewareEventListenerTest extends KernelTestCase
 
         $this->assertSame($this->abService, $request->attributes->get('ab-service'));
         $this->assertNotEmpty($request->attributes->get('ab-uid'));
+    }
+
+    public function testSubsequentRequestEvent(): void
+    {
+        $requestEvent = $this->makeRequestEvent();
+        $request = $requestEvent->getRequest();
+        $request->cookies->set('ab-uid', 'test-uid');
+
+        $this->abMiddlewareListener->onKernelRequest($requestEvent);
+
+        $this->assertSame($this->abService, $request->attributes->get('ab-service'));
+        $this->assertNotEmpty($request->attributes->get('ab-uid'));
+        $this->assertEquals('test-uid', $request->attributes->get('ab-uid'));
     }
 
     /**

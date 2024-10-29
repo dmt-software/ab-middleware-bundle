@@ -14,7 +14,7 @@ return static function (DefinitionConfigurator $definition): void {
                     ->floatPrototype()
                         ->min(0.0)
                         ->max(1.0)
-                        ->cannotBeEmpty()
+                        ->isRequired()
                     ->end()
                 ->end()
             ->end()

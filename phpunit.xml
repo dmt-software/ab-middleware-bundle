@@ -24,4 +24,16 @@
         </include>
     </source>
 
+    <coverage pathCoverage="false">
+        <report>
+            <clover outputFile="test-reports/clover.xml"/>
+            <html outputDirectory="test-reports/coverage"/>
+            <text outputFile="test-reports/coverage.txt"/>
+            <php outputFile="test-reports/coverage.php"/>
+        </report>
+    </coverage>
+
+    <php>
+        <ini name="pcov.enabled" value="1" />
+    </php>
 </phpunit>

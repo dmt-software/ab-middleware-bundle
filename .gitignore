@@ -3,3 +3,4 @@ composer.phar
 /vendor/
 /composer.lock
 /.phpunit.cache
+/test-reports/
