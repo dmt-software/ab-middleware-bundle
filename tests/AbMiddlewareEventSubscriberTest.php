@@ -24,6 +24,8 @@ class AbMiddlewareEventSubscriberTest extends KernelTestCase
     private AbMiddlewareSubscriber $abMiddlewareListener;
     private AbService $abService;
 
+    private string $cookieName = 'ab_test'; // see config.yml
+
     public static function getKernelClass(): string
     {
         return Kernel::class;
@@ -90,7 +92,10 @@ class AbMiddlewareEventSubscriberTest extends KernelTestCase
     {
         $requestEvent = $this->makeRequestEvent();
         $request = $requestEvent->getRequest();
-        $request->cookies->set('ab-uid', 'test-uid');
+        $request->cookies->set($this->cookieName, 'test-uid');
+
+        $this->assertArrayHasKey($this->cookieName, $request->cookies->all());
+        $this->assertEquals('test-uid', $request->cookies->get($this->cookieName));
 
         $this->abMiddlewareListener->onKernelRequest($requestEvent);
 
@@ -120,7 +125,7 @@ class AbMiddlewareEventSubscriberTest extends KernelTestCase
 
         $cookie = $cookies[0];
 
-        $this->assertEquals('ab-uid', $cookie->getName());
+        $this->assertEquals($this->cookieName, $cookie->getName());
 
         $this->assertNotEmpty($cookie->getValue());
 
