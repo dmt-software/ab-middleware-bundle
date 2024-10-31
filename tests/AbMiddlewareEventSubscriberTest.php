@@ -5,7 +5,7 @@ namespace DMT\AbMiddlewareBundle\Tests;
 use DateMalformedStringException;
 use DMT\AbMiddleware\AbService;
 use DMT\AbMiddlewareBundle\AbMiddlewareBundle;
-use DMT\AbMiddlewareBundle\EventListener\AbMiddlewareListener;
+use DMT\AbMiddlewareBundle\EventListener\AbMiddlewareSubscriber;
 use DMT\AbMiddlewareBundle\Tests\Util\App\Kernel;
 use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -16,12 +16,12 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
-#[CoversClass(AbMiddlewareListener::class)]
+#[CoversClass(AbMiddlewareSubscriber::class)]
 #[CoversClass(AbMiddlewareBundle::class)]
-class AbMiddlewareEventListenerTest extends KernelTestCase
+class AbMiddlewareEventSubscriberTest extends KernelTestCase
 {
     private Container $container;
-    private AbMiddlewareListener $abMiddlewareListener;
+    private AbMiddlewareSubscriber $abMiddlewareListener;
     private AbService $abService;
 
     public static function getKernelClass(): string
@@ -36,7 +36,7 @@ class AbMiddlewareEventListenerTest extends KernelTestCase
         self::bootKernel();
 
         $this->container = static::getContainer();
-        $this->abMiddlewareListener = $this->container->get(AbMiddlewareListener::class);
+        $this->abMiddlewareListener = $this->container->get(AbMiddlewareSubscriber::class);
         $this->abService = $this->container->get(AbService::class);
     }
 
@@ -50,7 +50,7 @@ class AbMiddlewareEventListenerTest extends KernelTestCase
     public function testContainer(): void
     {
         $this->assertInstanceOf(Container::class, $this->container);
-        $this->assertInstanceOf(AbMiddlewareListener::class, $this->abMiddlewareListener);
+        $this->assertInstanceOf(AbMiddlewareSubscriber::class, $this->abMiddlewareListener);
         $this->assertInstanceOf(AbService::class, $this->abService);
     }
 

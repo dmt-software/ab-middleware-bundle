@@ -24,7 +24,7 @@ class AbMiddlewareBundle extends AbstractBundle
 
         $container->services()
             ->get('ab_middleware')
-            ->arg('$abService', '@ab_service')
+            // ->arg('$abService', '@ab_service')
             ->arg('$cookieName', $config['cookie']['name'])
             ->arg('$cookieExpires', $config['cookie']['expires'])
             ->arg('$cookiePath', $config['cookie']['path'])

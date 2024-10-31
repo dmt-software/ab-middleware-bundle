@@ -14,17 +14,17 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 #[AsEventListener(event: RequestEvent::class, method: 'onKernelRequest')]
 #[AsEventListener(event: ResponseEvent::class, method: 'onKernelResponse')]
-class AbMiddlewareListener implements EventSubscriberInterface
+class AbMiddlewareSubscriber implements EventSubscriberInterface
 {
     public function __construct(
         protected AbService $abService,
         protected string $cookieName = 'ab-uid',
         protected string $cookieExpires = '+1 month',
-        protected string $cookieDomain = '',
-        protected string $cookiePath = '/',
-        protected bool $cookieSecure = false,
+        protected ?string $cookieDomain = null,
+        protected ?string $cookiePath = null,
+        protected ?bool $cookieSecure = null,
         protected bool $cookieHttpOnly = true,
-        protected string $cookieSameSite = 'Lax'
+        protected ?string $cookieSameSite = 'Lax'
     ) {
     }
 
