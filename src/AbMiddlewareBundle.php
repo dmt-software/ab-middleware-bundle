@@ -62,6 +62,7 @@ class AbMiddlewareBundle extends AbstractBundle
             ->arg('$cookieSecure', $config['cookie']['secure'])
             ->arg('$cookieHttpOnly', $config['cookie']['http_only'])
             ->arg('$cookieSameSite', $config['cookie']['same_site'])
+            ->tag('kernel.event_subscriber')
             ->public();
 
         $services->set(AbTwigHelper::class)
