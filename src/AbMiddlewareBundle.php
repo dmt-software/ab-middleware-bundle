@@ -3,6 +3,7 @@
 namespace DMT\AbMiddlewareBundle;
 
 use DMT\AbMiddleware\AbService;
+use DMT\AbMiddleware\AbTwigHelper;
 use DMT\AbMiddlewareBundle\EventListener\AbMiddlewareSubscriber;
 use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -48,17 +49,11 @@ class AbMiddlewareBundle extends AbstractBundle
     {
         $services = $container->services();
 
-        $services
-            ->set(AbService::class)
+        $services->set(AbService::class)
             ->arg('$experiments', $config['experiments'])
             ->public();
 
-        $services
-            ->get(AbService::class)
-            ->public();
-
-        $services
-            ->set(AbMiddlewareSubscriber::class)
+        $services->set(AbMiddlewareSubscriber::class)
             ->arg('$abService', new ReferenceConfigurator(AbService::class))
             ->arg('$cookieName', $config['cookie']['name'])
             ->arg('$cookieExpires', $config['cookie']['expires'])
@@ -69,8 +64,8 @@ class AbMiddlewareBundle extends AbstractBundle
             ->arg('$cookieSameSite', $config['cookie']['same_site'])
             ->public();
 
-        $services
-            ->get(AbMiddlewareSubscriber::class)
-            ->public();
+        $services->set(AbTwigHelper::class)
+            ->arg('$abService', new ReferenceConfigurator(AbService::class))
+            ->tag('twig.extension');
     }
 }
