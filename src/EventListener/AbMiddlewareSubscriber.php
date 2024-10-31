@@ -40,12 +40,10 @@ class AbMiddlewareSubscriber implements EventSubscriberInterface
     public function onKernelRequest(RequestEvent $event): void
     {
         $request = $event->getRequest();
-        if ($request->cookies->has($this->cookieName)) {
-            $this->abService->setUid($event->getRequest()->cookies->get($this->cookieName));
-        }
-
         if ($request->query->has($this->overrideQueryParameter)) {
             $this->abService->setUid($request->query->get($this->overrideQueryParameter));
+        } elseif ($request->cookies->has($this->cookieName)) {
+            $this->abService->setUid($event->getRequest()->cookies->get($this->cookieName));
         }
 
         $uid = $this->abService->getUid();
