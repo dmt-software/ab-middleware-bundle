@@ -22,7 +22,7 @@
   "require": {
     "php": ">=8.3",
     "symfony/http-kernel": "^7.0",
-    "dmt-software/ab-middleware": ">=0.0.2"
+    "dmt-software/ab-middleware": ">=0.0.3"
   },
   "require-dev": {
     "ext-pcov": "*",
