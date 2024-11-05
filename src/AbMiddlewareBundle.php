@@ -4,7 +4,9 @@ namespace DMT\AbMiddlewareBundle;
 
 use DMT\AbMiddleware\AbService;
 use DMT\AbMiddleware\AbTwigHelper;
+use DMT\AbMiddleware\GaAudienceHelper;
 use DMT\AbMiddlewareBundle\EventListener\AbMiddlewareSubscriber;
+use Google\Analytics\Admin\V1alpha\Client\AnalyticsAdminServiceClient;
 use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
@@ -42,6 +44,14 @@ class AbMiddlewareBundle extends AbstractBundle
                         ->scalarNode('same_site')->defaultValue('Lax')->end()
                     ->end()
                 ->end()
+                ->arrayNode('ga4')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('account_id')->defaultNull()->end()
+                        ->arrayNode('property_ids')
+                            ->scalarPrototype()->end()
+                        ->end()
+                    ->end()
             ->end();
     }
 
@@ -63,6 +73,17 @@ class AbMiddlewareBundle extends AbstractBundle
             ->arg('$cookieHttpOnly', $config['cookie']['http_only'])
             ->arg('$cookieSameSite', $config['cookie']['same_site'])
             ->tag('kernel.event_subscriber')
+            ->public();
+
+        $services->set(AnalyticsAdminServiceClient::class)
+            ->public();
+
+        $services->set(GaAudienceHelper::class)
+            ->arg('$abService', new ReferenceConfigurator(AbService::class))
+            ->arg('$analyticsAdminServiceClient', new ReferenceConfigurator(AnalyticsAdminServiceClient::class))
+            ->arg('$accountId', $config['ga4']['account_id'])
+            ->arg('$propertyIds', $config['ga4']['property_ids'])
+            ->arg('$audiencePrefix', $config['ga4']['audience_prefix'])
             ->public();
 
         $services->set(AbTwigHelper::class)
