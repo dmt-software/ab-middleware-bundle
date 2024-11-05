@@ -51,7 +51,9 @@ class AbMiddlewareBundle extends AbstractBundle
                         ->arrayNode('property_ids')
                             ->scalarPrototype()->end()
                         ->end()
+                        ->scalarNode('audience_prefix')->defaultValue('DOAB')->end()
                     ->end()
+                ->end()
             ->end();
     }
 
