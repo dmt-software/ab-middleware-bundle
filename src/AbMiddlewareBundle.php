@@ -80,7 +80,7 @@ class AbMiddlewareBundle extends AbstractBundle
 
         $services->set(GaAudienceHelper::class)
             ->arg('$abService', new ReferenceConfigurator(AbService::class))
-            ->arg('$analyticsAdminServiceClient', new ReferenceConfigurator(AnalyticsAdminServiceClient::class))
+            ->arg('$client', new ReferenceConfigurator(AnalyticsAdminServiceClient::class))
             ->arg('$accountId', $config['ga4']['account_id'])
             ->arg('$propertyIds', $config['ga4']['property_ids'])
             ->arg('$audiencePrefix', $config['ga4']['audience_prefix'])
