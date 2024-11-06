@@ -2,9 +2,9 @@
 
 namespace DMT\AbMiddlewareBundle;
 
-use App\Command\SyncAudiencesCommand;
 use DMT\AbMiddleware\AbService;
 use DMT\AbMiddleware\AbTwigHelper;
+use DMT\AbMiddleware\Command\SyncAudiencesCommand;
 use DMT\AbMiddleware\GaAudienceHelper;
 use DMT\AbMiddlewareBundle\EventListener\AbMiddlewareSubscriber;
 use Google\Analytics\Admin\V1alpha\AnalyticsAdminServiceClient;

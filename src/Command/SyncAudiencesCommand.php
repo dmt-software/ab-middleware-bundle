@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Command;
+namespace DMT\AbMiddlewareBundle\Command;
 
 use DMT\AbMiddleware\GaAudienceHelper;
 use Symfony\Component\Console\Attribute\AsCommand;
