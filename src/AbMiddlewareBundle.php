@@ -78,6 +78,7 @@ class AbMiddlewareBundle extends AbstractBundle
             ->public();
 
         $services->set(AnalyticsAdminServiceClient::class)
+            ->arg('$options', ['credentials' => getenv('GOOGLE_APPLICATION_CREDENTIALS')])
             ->public();
 
         $services->set(GaAudienceHelper::class)
