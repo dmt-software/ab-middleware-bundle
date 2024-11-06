@@ -4,8 +4,8 @@ namespace DMT\AbMiddlewareBundle;
 
 use DMT\AbMiddleware\AbService;
 use DMT\AbMiddleware\AbTwigHelper;
-use DMT\AbMiddleware\Command\SyncAudiencesCommand;
 use DMT\AbMiddleware\GaAudienceHelper;
+use DMT\AbMiddlewareBundle\Command\SyncAudiencesCommand;
 use DMT\AbMiddlewareBundle\EventListener\AbMiddlewareSubscriber;
 use Google\Analytics\Admin\V1alpha\AnalyticsAdminServiceClient;
 use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
