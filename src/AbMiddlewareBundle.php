@@ -2,11 +2,12 @@
 
 namespace DMT\AbMiddlewareBundle;
 
+use App\Command\SyncAudiencesCommand;
 use DMT\AbMiddleware\AbService;
 use DMT\AbMiddleware\AbTwigHelper;
 use DMT\AbMiddleware\GaAudienceHelper;
 use DMT\AbMiddlewareBundle\EventListener\AbMiddlewareSubscriber;
-use Google\Analytics\Admin\V1alpha\Client\AnalyticsAdminServiceClient;
+use Google\Analytics\Admin\V1alpha\AnalyticsAdminServiceClient;
 use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
@@ -78,7 +79,7 @@ class AbMiddlewareBundle extends AbstractBundle
             ->public();
 
         $services->set(AnalyticsAdminServiceClient::class)
-            ->arg('$options', ['credentials' => getenv('GOOGLE_APPLICATION_CREDENTIALS')])
+            ->arg('$options', ['credentials' => '%env(GOOGLE_APPLICATION_CREDENTIALS)%'])
             ->public();
 
         $services->set(GaAudienceHelper::class)
@@ -92,5 +93,10 @@ class AbMiddlewareBundle extends AbstractBundle
         $services->set(AbTwigHelper::class)
             ->arg('$abService', new ReferenceConfigurator(AbService::class))
             ->tag('twig.extension');
+
+        $services->set(SyncAudiencesCommand::class)
+            ->arg('$gaAudienceHelper', new ReferenceConfigurator(GaAudienceHelper::class))
+            ->tag('console.command')
+            ->public();
     }
 }
