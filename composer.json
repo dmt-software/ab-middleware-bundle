@@ -22,7 +22,7 @@
   "require": {
     "php": ">=8.3",
     "symfony/http-kernel": "^7.0",
-    "dmt-software/ab-middleware": ">=0.0.6",
+    "dmt-software/ab-middleware": "^0.0.10",
     "symfony/console": "^7.1"
   },
   "require-dev": {
